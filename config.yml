@@ -33,7 +33,7 @@ ai:
   enabled: true                      # cần secret GEMINI_API_KEY (free ở aistudio.google.com), không có thì dùng luật cơ bản
   model: auto                        # tự dò model Flash/Flash-Lite miễn phí, hoặc ghi cụ thể
   trending_slots: 2                  # mỗi nền tảng chừa 2 chỗ hashtag cho tag trending, còn lại giữ tag của mày
-  extra_instructions: ""             # dặn thêm giọng văn, ví dụ "giọng bựa, gen Z"
+  extra_instructions: "Giọng game thủ Việt, gần gũi, hơi bựa nhưng không lố. Câu hook đầu tiên phải nêu khoảnh khắc đắt nhất của clip (pha xử lý, cú lật kèo, kết quả bất ngờ). Không clickbait sai sự thật."  # dặn thêm giọng văn
 trending:
   enabled: true
   region: VN

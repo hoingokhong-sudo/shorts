@@ -14,7 +14,9 @@ python tools/add_clip.py a.mp4 b.mp4 c.mp4 d.mp4 --tags "#tft"
 ```
 
 Hoặc thủ công: bỏ `ten-clip.mp4` (+ `ten-clip.txt` tuỳ chọn) vào thư mục `clips/` rồi `git push`.
-File `.txt` cùng tên:
+**Đặt tên + tag ngay trong tên file** (không cần file .txt): `Pentakill Yasuo cực gắt #tft #highlight.mp4`.
+Phần chữ = tiêu đề (giữ nguyên), phần `#...` = tag của mày (luôn được giữ). Số thứ tự đầu tên (`01 `) chỉ để xếp thứ tự, tool tự bỏ.
+File `.txt` cùng tên (nếu có) thắng tên file:
 
 ```
 title: Cú lật kèo phút chót          (tuỳ chọn, không có thì AI đặt)

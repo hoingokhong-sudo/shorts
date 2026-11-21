@@ -201,7 +201,11 @@ def run(cfg: dict, root: Path, *, now: datetime | None = None, force: bool = Fal
 
 
 def _make_meta(cfg, clips_dir: Path, name: str, platforms: dict, env, use_ai: bool) -> dict:
-    side = clips.parse_sidecar(clips_dir / (name.rsplit(".", 1)[0] + ".txt"))
+    stem = name.rsplit(".", 1)[0]
+    side = clips.parse_sidecar(clips_dir / (stem + ".txt"))
+    fn = clips.parse_name(stem)  # tiêu đề + tag đặt ngay trong tên file; file .txt (nếu có) ưu tiên hơn
+    side["title"] = side["title"] or fn["title"]
+    side["tags"] = fn["tags"] + [t for t in side["tags"] if t.lower() not in {x.lower() for x in fn["tags"]}]
     key = env.get("GEMINI_API_KEY")
     tr = {"hashtags": [], "keywords": []}
     if use_ai and (cfg["trending"]["enabled"]):

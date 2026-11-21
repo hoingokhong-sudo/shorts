@@ -27,6 +27,17 @@ def prettify(stem: str) -> str:
     return (s[:1].upper() + s[1:]) if s else stem
 
 
+def parse_name(stem: str) -> dict:
+    """Tên file = tiêu đề + tag, ví dụ: `Pentakill Yasuo cực gắt #tft #highlight.mp4`.
+    Tiêu đề giữ nguyên chữ mày gõ (bỏ tiền tố số thứ tự và phần #tag)."""
+    tags = ["#" + t for t in HASHTAG.findall(stem)]
+    title = re.sub(r"\s+", " ", HASHTAG.sub("", stem)).strip(" -_.")
+    title = re.sub(r"^\s*\d{1,3}[-_. ]+(?=\D)", "", title).strip()
+    if title and " " not in title:  # kiểu cach-nau-pho: đổi gạch thành khoảng trắng
+        title = re.sub(r"[-_]+", " ", title).strip()
+    return {"title": title, "tags": tags}
+
+
 def parse_sidecar(path: Path) -> dict:
     """File .txt cạnh clip:
         title: tiêu đề tuỳ chọn

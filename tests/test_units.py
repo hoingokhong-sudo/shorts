@@ -25,6 +25,12 @@ class Sidecar(unittest.TestCase):
     def test_missing(self):
         self.assertEqual(clips.parse_sidecar(Path("/nope.txt"))["tags"], [])
 
+    def test_filename_title_tags(self):
+        n = clips.parse_name("03 Pentakill Yasuo cực gắt #tft #HighLight")
+        self.assertEqual(n["title"], "Pentakill Yasuo cực gắt")
+        self.assertEqual(n["tags"], ["#tft", "#HighLight"])
+        self.assertEqual(clips.parse_name("02-cach-nau-pho")["title"], "cach nau pho")
+
     def test_prettify_and_order(self):
         self.assertEqual(clips.prettify("02-cach-nau-pho"), "Cach nau pho")
         self.assertEqual(clips.natural_key("clip10.mp4") > clips.natural_key("clip2.mp4"), True)
