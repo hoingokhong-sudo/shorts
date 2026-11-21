@@ -1,0 +1,75 @@
+name: autopost
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"        # mỗi 20 phút xem có tới giờ đăng chưa (GitHub có thể trễ vài phút)
+  push:
+    branches: [main, master]
+    paths: ["clips/**", "config.yml"]   # chốt clip = push clip lên là chạy ngay
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Đăng clip kế tiếp ngay, bỏ qua lịch"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Chạy thử: không đăng, chỉ in caption sẽ dùng"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autopost
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}   # luôn lấy state mới nhất, tránh đăng đôi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Run autopost
+        env:
+          AUTOPOST_FORCE: ${{ inputs.force }}
+          AUTOPOST_DRY_RUN: ${{ inputs.dry_run }}
+          TOKEN_KEY: ${{ secrets.TOKEN_KEY }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          TIKTOK_REFRESH_TOKEN: ${{ secrets.TIKTOK_REFRESH_TOKEN }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python -m autopost run
+
+      - name: Lưu state (luôn chạy, kể cả khi bước trên lỗi, để không mất token TikTok mới xoay)
+        if: always()
+        run: |
+          git config user.name "autopost-bot"
+          git config user.email "autopost-bot@users.noreply.github.com"
+          git add -A state clips failed
+          if git diff --cached --quiet; then echo "không có thay đổi"; exit 0; fi
+          git commit -q -m "autopost: cập nhật state"
+          for i in 1 2 3 4; do
+            git pull --rebase -q && git push -q && exit 0
+            sleep $((i * 5))
+          done
+          echo "push thất bại" && exit 1

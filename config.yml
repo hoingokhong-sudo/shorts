@@ -1,0 +1,66 @@
+# ====== CẤU HÌNH AUTOPOST ======
+# Chỉ cần sửa mấy dòng đánh dấu (*). Mọi thứ khác có mặc định hợp lý.
+
+timezone: Asia/Ho_Chi_Minh
+language: vi
+
+platforms:
+  youtube: true
+  tiktok: true
+  instagram: true      # (*) tắt đến khi tạo xong tài khoản IG Professional
+
+# ---------- LỊCH ĐĂNG ----------
+schedule:
+  two_per_day_when_queue_over: 7     # hàng đợi > 7 clip thì 2 clip/ngày, còn lại 1 clip/ngày
+  slots_1_per_day: ["20:00"]         # giờ vàng người Việt xem nhiều nhất (tối)
+  slots_2_per_day: ["12:00", "20:00"] # trưa + tối
+  late_window_hours: 3               # GitHub cron có thể trễ, vẫn đăng nếu trễ không quá 3h
+  min_spacing_hours: 4               # 2 bài cách nhau tối thiểu 4h
+  post_immediately: true             # chốt clip mới thì đăng NGAY (nếu hôm nay chưa hết quota)
+  immediate_window_hours: 6          # đang giờ ngủ thì đợi hết giờ ngủ, quá 6h thì thôi về slot thường
+  quiet_hours: ["00:30", "06:30"]    # không đăng "ngay" trong khoảng này
+  max_attempts: 3
+  retry_cooldown_minutes: 20
+
+# ---------- NGÁCH (*) ----------
+# Dùng để lọc tag trending cho hợp nội dung. Đổi theo kênh của mày.
+niche:
+  keywords: [game, gaming, tft, đấu trường chân lý, stream, highlight]
+  always_tags: []                    # tag luôn muốn thêm vào mọi clip (nếu còn chỗ)
+
+# ---------- AI & TRENDING (miễn phí) ----------
+ai:
+  enabled: true                      # cần secret GEMINI_API_KEY (free ở aistudio.google.com), không có thì dùng luật cơ bản
+  model: auto                        # tự dò model Flash/Flash-Lite miễn phí, hoặc ghi cụ thể
+  trending_slots: 2                  # mỗi nền tảng chừa 2 chỗ hashtag cho tag trending, còn lại giữ tag của mày
+  extra_instructions: ""             # dặn thêm giọng văn, ví dụ "giọng bựa, gen Z"
+trending:
+  enabled: true
+  region: VN
+  youtube_category_id: "20"          # (*) 20 = Gaming. Để "" nếu muốn trending tất cả mục
+  google_trends: true
+
+# ---------- HOST CLIP CHO INSTAGRAM ----------
+hosting:
+  mode: pages                        # pages (khuyên dùng) hoặc raw
+  public_base_url: ""                # để trống = tự suy ra từ repo
+  wait_minutes: 8
+
+# ---------- TỪNG NỀN TẢNG ----------
+youtube:
+  privacy: public
+  category_id: "20"                  # (*) 20 Gaming, 22 People&Blogs, 24 Entertainment, 23 Comedy, 26 Howto
+  made_for_kids: false
+  ai_generated: false                # true nếu clip có hình/giọng do AI tạo (YouTube yêu cầu khai báo)
+  add_shorts_tag: true
+
+tiktok:
+  # draft  = clip vào hộp thư TikTok, mày mở app bấm Đăng (chọn được nhạc trend, không cần để tài khoản riêng tư)
+  # direct = đăng thẳng kèm caption, nhưng app chưa audit thì bài là SELF_ONLY và tài khoản phải để riêng tư
+  # manual = không dùng API, tool chỉ gửi caption + link tải clip để mày up tay
+  mode: draft
+  privacy: SELF_ONLY                 # chỉ dùng cho mode direct. Sau khi app qua audit đổi thành PUBLIC_TO_EVERYONE
+  ai_generated: false
+
+instagram:
+  share_to_feed: true
