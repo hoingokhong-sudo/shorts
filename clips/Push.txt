@@ -1,0 +1,1 @@
+cd "C:\Claude Automation\autopost-tool"; git add -A; git commit -m "update"; git push
