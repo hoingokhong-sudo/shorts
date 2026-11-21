@@ -30,7 +30,7 @@ import requests
 ROOT = Path(__file__).resolve().parent.parent
 ENV_FILE = ROOT / ".env.local"
 YT_SCOPES = "https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly"
-TT_SCOPES = "user.info.basic,video.upload,video.publish"
+TT_SCOPES = "user.info.basic,video.upload"
 TT_PORT = 3455
 TT_REDIRECT = f"http://localhost:{TT_PORT}/callback/"
 
