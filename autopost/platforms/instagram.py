@@ -14,6 +14,7 @@ from .. import state as S
 from .base import Job, PlatformError, Result
 
 HOST = "https://graph.instagram.com"
+FB_HOST = "https://graph.facebook.com"  # Unified login (system-user token), app Meta mới chỉ còn kiểu này
 
 
 class Instagram:
@@ -22,7 +23,10 @@ class Instagram:
     def __init__(self, cfg, tokens, env, sleep=None):
         self.cfg, self.tokens, self.env, self._sleep = cfg, tokens, env, sleep
         v = cfg["instagram"]["api_version"]
-        self.base = f"{HOST}/{v}" if v else HOST
+        # Có IG_USER_ID => token system-user (Unified login): graph.facebook.com, không hết hạn, không refresh
+        self.system = bool(env.get("IG_USER_ID"))
+        host = FB_HOST if self.system else HOST
+        self.base = f"{host}/{v}" if v else host
 
     def sleep(self, s: float) -> None:
         (self._sleep or time.sleep)(s)
@@ -38,6 +42,8 @@ class Instagram:
         return t
 
     def maybe_refresh(self, now: datetime | None = None) -> None:
+        if self.system:
+            return
         now = now or datetime.now(timezone.utc)
         last = S.parse(self.tokens.meta("ig_refreshed_at"))
         if last is None:
@@ -54,6 +60,8 @@ class Instagram:
             print(f"[instagram] refresh token lỗi {r.status_code}: {str(j)[:160]} (sẽ thử lại lần sau)")
 
     def user_id(self) -> str:
+        if self.system:
+            return str(self.env["IG_USER_ID"])
         uid = self.tokens.meta("ig_user_id")
         if uid:
             return uid
