@@ -1,13 +1,48 @@
 {
   "version": 1,
-  "clips": {
-    "Cặp đôi hoàn hảo TFT #tft #dautruongchanly #doubleup.mp4": {
-      "added": "2026-11-21T21:25:22Z",
-      "platforms": {},
-      "started": false
+  "clips": {},
+  "posts": [
+    "2026-11-21T21:27:49Z"
+  ],
+  "history": [
+    {
+      "clip": "Cặp đôi hoàn hảo TFT #tft #dautruongchanly #doubleup.mp4",
+      "at": "2026-11-21T21:27:49Z",
+      "ok": true,
+      "results": {
+        "youtube": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-21T21:27:49Z",
+          "result": {
+            "id": "U_L2Q3gAOlw",
+            "url": "https://www.youtube.com/shorts/U_L2Q3gAOlw"
+          },
+          "error": ""
+        },
+        "tiktok": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-21T21:27:49Z",
+          "result": {
+            "id": "v_inbox_file~v2.7710738910054893588",
+            "note": "SEND_TO_USER_INBOX",
+            "manual": "Mở app TikTok, bấm thông báo trong hộp thư để hoàn tất bài, dán caption bên dưới, chọn nhạc đang trend rồi Đăng.\nCaption:\nPha úp sọt combo chuẩn bài khiến địch ngậm ngùi bay màu. Hai ô tô này gánh tạ có mỏi lưng không anh em? #tft #dautruongchanly #doubleup #game #gaming"
+          },
+          "error": ""
+        },
+        "instagram": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-21T21:27:49Z",
+          "result": {
+            "id": "17918463027550926",
+            "url": "https://www.instagram.com/reel/DgBMozbAO62/"
+          },
+          "error": ""
+        }
+      }
     }
-  },
-  "posts": [],
-  "history": [],
-  "credit_until": "2026-11-22T03:25:22Z"
+  ],
+  "credit_until": null
 }
