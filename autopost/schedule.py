@@ -1,7 +1,8 @@
 """Logic lịch đăng. Toàn hàm thuần, không đụng mạng/file nên test được.
 
 Quy tắc:
-- Hàng đợi (kể cả clip đã đăng trong hôm nay) <= ngưỡng -> 1 clip/ngày, ngược lại 2 clip/ngày.
+- Có `schedule.double_days` (vd sat, sun): những thứ đó 2 clip/ngày, các ngày còn lại 1 clip/ngày.
+- Không khai `double_days`: hàng đợi (kể cả clip đã đăng trong hôm nay) <= ngưỡng -> 1 clip/ngày, ngược lại 2 clip/ngày.
 - Đăng khi tới "slot" giờ vàng, hoặc ngay khi vừa chốt clip mới (nếu chưa hết quota, không phải giờ ngủ).
 - Luôn giữ khoảng cách tối thiểu giữa 2 bài và không vượt quota ngày.
 """
@@ -28,7 +29,13 @@ def _t(s: str) -> time:
     return time(int(h), int(m))
 
 
-def per_day_for(queue_size: int, cfg: dict) -> int:
+WEEKDAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+
+
+def per_day_for(queue_size: int, cfg: dict, day=None) -> int:
+    dd = {str(x).strip().lower()[:3] for x in cfg["schedule"].get("double_days") or []}
+    if dd and day is not None:
+        return 2 if WEEKDAYS[day.weekday()] in dd else 1
     return 2 if queue_size > cfg["schedule"]["two_per_day_when_queue_over"] else 1
 
 
@@ -59,7 +66,7 @@ def decide(now_utc: datetime, cfg: dict, st: dict, pending: int, force: bool = F
     sc = cfg["schedule"]
     local = now_utc.astimezone(tz)
     pt = posts_today(st, now_utc, tz)
-    per_day = per_day_for(pending + pt, cfg)
+    per_day = per_day_for(pending + pt, cfg, local.date())
     base = dict(per_day=per_day, posts_today=pt, pending=pending)
     if pending == 0:
         return Plan(False, "hàng đợi trống", **base)
@@ -93,7 +100,7 @@ def forecast(now_utc: datetime, cfg: dict, st: dict, pending: int, limit: int = 
     pt = posts_today(st, now_utc, tz)
     cu = S.parse(st.get("credit_until"))
     if remaining and cfg["schedule"]["post_immediately"] and cu and now_utc < cu and not in_quiet(local, cfg):
-        if pt < per_day_for(remaining + pt, cfg):
+        if pt < per_day_for(remaining + pt, cfg, local.date()):
             out.append(local)
             remaining -= 1
             pt += 1
@@ -101,7 +108,7 @@ def forecast(now_utc: datetime, cfg: dict, st: dict, pending: int, limit: int = 
     first_day = True
     while remaining > 0 and len(out) < limit and (day - local.date()).days < 400:
         done_today = pt if first_day else 0
-        per_day = per_day_for(remaining + done_today, cfg)
+        per_day = per_day_for(remaining + done_today, cfg, day)
         slots = slots_for(per_day, cfg)
         for s in slots:
             if done_today >= per_day or remaining <= 0:

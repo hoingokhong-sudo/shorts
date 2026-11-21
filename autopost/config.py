@@ -16,6 +16,7 @@ DEFAULTS: dict = {
     "platforms": {"youtube": True, "tiktok": True, "instagram": True},
     "schedule": {
         "two_per_day_when_queue_over": 7,
+        "double_days": [],
         "slots_1_per_day": ["20:00"],
         "slots_2_per_day": ["12:00", "20:00"],
         "late_window_hours": 3,

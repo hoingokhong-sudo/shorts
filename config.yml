@@ -11,7 +11,8 @@ platforms:
 
 # ---------- LỊCH ĐĂNG ----------
 schedule:
-  two_per_day_when_queue_over: 7     # hàng đợi > 7 clip thì 2 clip/ngày, còn lại 1 clip/ngày
+  double_days: [sat, sun]            # mỗi tuần 2 ngày này đăng 2 clip, 5 ngày còn lại 1 clip (mon..sun). Để [] thì dùng luật theo hàng đợi bên dưới
+  two_per_day_when_queue_over: 7     # (chỉ dùng khi double_days trống) hàng đợi > 7 clip thì 2 clip/ngày
   slots_1_per_day: ["20:00"]         # giờ vàng người Việt xem nhiều nhất (tối)
   slots_2_per_day: ["12:00", "20:00"] # trưa + tối
   late_window_hours: 3               # GitHub cron có thể trễ, vẫn đăng nếu trễ không quá 3h

@@ -146,3 +146,30 @@ class Forecast(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DoubleDays(unittest.TestCase):
+    """double_days: [sat, sun] -> T7/CN 2 clip/ngày, T2..T6 1 clip/ngày, bất kể hàng đợi dài hay ngắn."""
+
+    CFGD = config.load("/nonexistent")
+    CFGD["schedule"]["double_days"] = ["sat", "sun"]
+
+    def test_weekday_one_even_with_big_queue(self):
+        # 2026-11-23 là thứ Hai
+        p = schedule.decide(vn(2026, 11, 23, 20, 5), self.CFGD, fresh(), 30)
+        self.assertTrue(p.post)
+        self.assertEqual(p.per_day, 1)
+        st = {"posts": [S.iso(vn(2026, 11, 23, 20, 2))], "credit_until": None}
+        self.assertFalse(schedule.decide(vn(2026, 11, 23, 21), self.CFGD, st, 30).post)
+
+    def test_weekend_two_even_with_small_queue(self):
+        # 2026-11-22 là Chủ nhật, hàng đợi chỉ 2 clip
+        p = schedule.decide(vn(2026, 11, 22, 12, 5), self.CFGD, fresh(), 2)
+        self.assertTrue(p.post)
+        self.assertEqual(p.per_day, 2)
+
+    def test_forecast_week(self):
+        f = schedule.forecast(vn(2026, 11, 23, 8), self.CFGD, fresh(), 9)
+        days = [d.strftime("%a") for d in f]
+        # Mon..Fri 1 clip, Sat 2, Sun 2 = 9 clip trong 1 tuần
+        self.assertEqual(days, ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sat", "Sun", "Sun"])
