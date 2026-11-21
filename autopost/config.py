@@ -31,6 +31,7 @@ DEFAULTS: dict = {
         "enabled": True,
         "model": "auto",
         "trending_slots": 2,
+        "write_caption": False,
         "extra_instructions": "",
     },
     "trending": {
@@ -39,6 +40,7 @@ DEFAULTS: dict = {
         "youtube_category_id": "",
         "google_trends": True,
     },
+    "social": {"enabled": False, "heading": "", "links": {}, "donate": "", "donate_on": ["youtube", "instagram"]},
     "hosting": {"mode": "pages", "public_base_url": "", "wait_minutes": 8},
     "youtube": {
         "privacy": "public",

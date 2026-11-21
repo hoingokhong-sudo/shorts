@@ -139,7 +139,10 @@ def build(cfg: dict, name: str, sidecar: dict, trending: dict, gemini_key: str |
     if ai:
         ai_title = _clip(str(ai.get("title") or ""), 70)
         title = sidecar["title"] or ai_title or title
-        caption = _clip(str(ai.get("caption") or ""), 220)
+        if cfg["ai"].get("write_caption", False):
+            caption = _clip(str(ai.get("caption") or ""), 220)
+        else:  # mặc định: caption = ghi chú trong .txt (nếu có) hoặc chính tên clip, AI chỉ chọn tag
+            caption = _clip(sidecar["note"], 220) or title
         extra_tags = dedupe(ai.get("hashtags") or [])
         source = "gemini"
     else:
@@ -153,7 +156,8 @@ def build(cfg: dict, name: str, sidecar: dict, trending: dict, gemini_key: str |
     def merge(limit: int) -> list[str]:
         slots = min(cfg["ai"]["trending_slots"], limit)
         pool_extra = [t for t in dedupe(extra_tags + always) if t.lower() not in {u.lower() for u in user}]
-        keep_user = user[: max(limit - min(slots, len(pool_extra)), 0)]
+        # chừa chỗ cho tag trending, nhưng luôn giữ ít nhất 3 tag của chủ clip (YouTube chỉ có 3 chỗ)
+        keep_user = user[: max(limit - min(slots, len(pool_extra)), min(3, limit))]
         out = keep_user + pool_extra
         out = dedupe(out)[:limit]
         if len(out) < limit:  # còn chỗ thì bù tag của mày
@@ -166,13 +170,34 @@ def build(cfg: dict, name: str, sidecar: dict, trending: dict, gemini_key: str |
     if cfg["youtube"]["add_shorts_tag"] and "#shorts" not in {t.lower() for t in yt_tags}:
         yt_tags.append("#Shorts")
     text = {
-        "youtube": {"title": _clip(title, 95), "description": (caption + "\n\n" + " ".join(yt_tags)).strip()},
-        "tiktok": _clip_total(caption, tags["tiktok"], 2200),
-        "instagram": _clip_total(caption, tags["instagram"], 2200, sep="\n\n"),
+        "youtube": {"title": _clip(title, 95), "description": "\n\n".join(x for x in (caption, footer(cfg, "youtube"), " ".join(yt_tags)) if x).strip()},
+        "tiktok": _clip_total(caption, tags["tiktok"], 2200, extra=footer(cfg, "tiktok")),
+        "instagram": _clip_total(caption, tags["instagram"], 2200, sep="\n\n", extra=footer(cfg, "instagram")),
     }
     return {"title": title, "caption": caption, "tags": tags, "text": text, "source": source}
 
 
-def _clip_total(caption: str, tags: list[str], limit: int, sep: str = " ") -> str:
-    s = (caption + sep + " ".join(tags)).strip()
+def footer(cfg: dict, platform: str) -> str:
+    """Khối link mạng xã hội (+ dòng donate nếu nền tảng đó nằm trong donate_on) gắn cuối mô tả."""
+    so = cfg.get("social") or {}
+    if not so.get("enabled"):
+        return ""
+    lines = [so["heading"]] if so.get("heading") else []
+    labels = {"youtube": "YouTube", "tiktok": "TikTok", "instagram": "Instagram"}
+    for k, label in labels.items():
+        if so.get("links", {}).get(k):
+            lines.append(f"{label}: {so['links'][k]}")
+    for k, v in so.get("links", {}).items():
+        if k not in labels and v:
+            lines.append(f"{k.capitalize()}: {v}")
+    if so.get("donate") and platform in so.get("donate_on", []):
+        lines += ["", so["donate"]]
+    return "\n".join(lines).strip()
+
+
+def _clip_total(caption: str, tags: list[str], limit: int, sep: str = " ", extra: str = "") -> str:
+    head = caption + ("\n\n" + extra if extra else "")
+    if extra:
+        sep = "\n\n"
+    s = (head + sep + " ".join(tags)).strip()
     return s if len(s) <= limit else s[:limit]
