@@ -17,7 +17,8 @@ schedule:
   slots_2_per_day: ["12:00", "20:00"] # trưa + tối
   late_window_hours: 3               # GitHub cron có thể trễ, vẫn đăng nếu trễ không quá 3h
   min_spacing_hours: 4               # 2 bài cách nhau tối thiểu 4h
-  post_immediately: true             # chốt clip mới thì đăng NGAY (nếu hôm nay chưa hết quota)
+  start_date: "2026-11-23"          # trước ngày này không tự đăng (force vẫn đăng)
+  post_immediately: false            # chốt clip mới thì đăng NGAY (nếu hôm nay chưa hết quota)
   immediate_window_hours: 6          # đang giờ ngủ thì đợi hết giờ ngủ, quá 6h thì thôi về slot thường
   quiet_hours: ["00:30", "06:30"]    # không đăng "ngay" trong khoảng này
   max_attempts: 3

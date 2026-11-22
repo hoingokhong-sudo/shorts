@@ -72,6 +72,9 @@ def decide(now_utc: datetime, cfg: dict, st: dict, pending: int, force: bool = F
         return Plan(False, "hàng đợi trống", **base)
     if force:
         return Plan(True, "ép đăng ngay (force)", **base)
+    sd = str(sc.get("start_date") or "")
+    if sd and local.date().isoformat() < sd:
+        return Plan(False, f"chưa tới ngày bắt đầu lịch ({sd})", **base)
     if pt >= per_day:
         return Plan(False, f"đủ quota hôm nay ({pt}/{per_day})", **base)
     times = _post_times(st)
@@ -105,7 +108,10 @@ def forecast(now_utc: datetime, cfg: dict, st: dict, pending: int, limit: int = 
             remaining -= 1
             pt += 1
     day = local.date()
-    first_day = True
+    sd = str(cfg["schedule"].get("start_date") or "")
+    if sd and day.isoformat() < sd:
+        day = datetime.fromisoformat(sd).date()
+    first_day = day == local.date()
     while remaining > 0 and len(out) < limit and (day - local.date()).days < 400:
         done_today = pt if first_day else 0
         per_day = per_day_for(remaining + done_today, cfg, day)
