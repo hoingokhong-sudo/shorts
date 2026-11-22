@@ -1,11 +1,6 @@
 {
   "version": 1,
   "clips": {
-    "Hiến tế Krug 3, Warwick hóa thần cứu cả 2 chúng tôi #tft #dautruongchanly #doubleup.mp4": {
-      "added": "2026-11-21T22:24:23Z",
-      "platforms": {},
-      "started": false
-    },
     "Khi bạn còng lưng def máu đầu game còn thằng cốt cứ Tiên hắc ám đâu T.T #tft #dautruongchanly #doubleup.mp4": {
       "added": "2026-11-21T22:24:23Z",
       "platforms": {},
@@ -23,7 +18,8 @@
     }
   },
   "posts": [
-    "2026-11-21T21:27:49Z"
+    "2026-11-21T21:27:49Z",
+    "2026-11-22T02:30:16Z"
   ],
   "history": [
     {
@@ -63,7 +59,45 @@
           "error": ""
         }
       }
+    },
+    {
+      "clip": "Hiến tế Krug 3, Warwick hóa thần cứu cả 2 chúng tôi #tft #dautruongchanly #doubleup.mp4",
+      "at": "2026-11-22T02:30:16Z",
+      "ok": true,
+      "results": {
+        "youtube": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-22T02:30:16Z",
+          "result": {
+            "id": "0wo-Vpv6ecI",
+            "url": "https://www.youtube.com/shorts/0wo-Vpv6ecI"
+          },
+          "error": ""
+        },
+        "tiktok": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-22T02:30:16Z",
+          "result": {
+            "id": "v_inbox_file~v2.7710817209148803080",
+            "note": "SEND_TO_USER_INBOX",
+            "manual": "Mở app TikTok, bấm thông báo trong hộp thư để hoàn tất bài, dán caption bên dưới, chọn nhạc đang trend rồi Đăng.\nCaption:\nHiến tế Krug 3, Warwick hóa thần cứu cả 2 chúng tôi\n\nTheo dõi Hội Ngộ:\nYouTube: https://www.youtube.com/@HộiNgộKhông\nTikTok: https://www.tiktok.com/@hoi.ngo.khong\nInstagram: https://www.instagram.com/hoi.ngo.khong/\n\n#tft #dautruongchanly #doubleup"
+          },
+          "error": ""
+        },
+        "instagram": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-22T02:30:16Z",
+          "result": {
+            "id": "18290649646290689",
+            "url": "https://www.instagram.com/reel/DgBvR_mE_sE/"
+          },
+          "error": ""
+        }
+      }
     }
   ],
-  "credit_until": "2026-11-22T04:24:23Z"
+  "credit_until": null
 }
