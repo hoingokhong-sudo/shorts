@@ -1,11 +1,6 @@
 {
   "version": 1,
   "clips": {
-    "Khi bạn còng lưng def máu đầu game còn thằng cốt cứ Tiên hắc ám đâu T.T #tft #dautruongchanly #doubleup.mp4": {
-      "added": "2026-11-21T22:24:23Z",
-      "platforms": {},
-      "started": false
-    },
     "Warwick tích số cực căng rồi gánh board thằng bạn còng cả lưng #tft #dautruongchanly #doubleup.mp4": {
       "added": "2026-11-21T22:24:23Z",
       "platforms": {},
@@ -24,7 +19,8 @@
   },
   "posts": [
     "2026-11-21T21:27:49Z",
-    "2026-11-22T02:30:16Z"
+    "2026-11-22T02:30:16Z",
+    "2026-11-23T13:34:37Z"
   ],
   "history": [
     {
@@ -98,6 +94,44 @@
           "result": {
             "id": "18290649646290689",
             "url": "https://www.instagram.com/reel/DgBvR_mE_sE/"
+          },
+          "error": ""
+        }
+      }
+    },
+    {
+      "clip": "Khi bạn còng lưng def máu đầu game còn thằng cốt cứ Tiên hắc ám đâu T.T #tft #dautruongchanly #doubleup.mp4",
+      "at": "2026-11-23T13:34:37Z",
+      "ok": true,
+      "results": {
+        "youtube": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-23T13:34:37Z",
+          "result": {
+            "id": "URdF71VAx0k",
+            "url": "https://www.youtube.com/shorts/URdF71VAx0k"
+          },
+          "error": ""
+        },
+        "tiktok": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-23T13:34:37Z",
+          "result": {
+            "id": "v_inbox_file~v2.7711359518235625473",
+            "note": "SEND_TO_USER_INBOX",
+            "manual": "Mở app TikTok, bấm thông báo trong hộp thư để hoàn tất bài, dán caption bên dưới, chọn nhạc đang trend rồi Đăng.\nCaption:\nKhi bạn còng lưng def máu đầu game còn thằng cốt cứ Tiên hắc ám đâu T.T\n\nTheo dõi Hội Ngộ:\nYouTube: https://www.youtube.com/@HộiNgộKhông\nTikTok: https://www.tiktok.com/@hoi.ngo.khong\nInstagram: https://www.instagram.com/hoi.ngo.khong/\n\n#tft #dautruongchanly #doubleup #game #gaming"
+          },
+          "error": ""
+        },
+        "instagram": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-23T13:34:37Z",
+          "result": {
+            "id": "18012353891781356",
+            "url": "https://www.instagram.com/reel/DgFgDIhjcgh/"
           },
           "error": ""
         }
