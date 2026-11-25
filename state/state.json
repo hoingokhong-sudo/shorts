@@ -1,11 +1,6 @@
 {
   "version": 1,
   "clips": {
-    "ZYRA 3 TOP 1 MÃN NHÃN DOUBLEUP #tft #dautruongchanly #doubleup.mp4": {
-      "added": "2026-11-21T22:24:23Z",
-      "platforms": {},
-      "started": false
-    },
     "Hiến tế Krug 3, Warwick hóa thần cứu cả 2 chúng tôi #tft #dautruongchanly #doubleup.mp4": {
       "added": "2026-11-22T02:49:31Z",
       "platforms": {},
@@ -16,7 +11,8 @@
     "2026-11-21T21:27:49Z",
     "2026-11-22T02:30:16Z",
     "2026-11-23T13:34:37Z",
-    "2026-11-24T13:52:25Z"
+    "2026-11-24T13:52:25Z",
+    "2026-11-25T14:08:51Z"
   ],
   "history": [
     {
@@ -166,6 +162,44 @@
           "result": {
             "id": "18125033296964117",
             "url": "https://www.instagram.com/reel/DgIG3K_CcpV/"
+          },
+          "error": ""
+        }
+      }
+    },
+    {
+      "clip": "ZYRA 3 TOP 1 MÃN NHÃN DOUBLEUP #tft #dautruongchanly #doubleup.mp4",
+      "at": "2026-11-25T14:08:51Z",
+      "ok": true,
+      "results": {
+        "youtube": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-25T14:08:51Z",
+          "result": {
+            "id": "ZY2WNlKszMU",
+            "url": "https://www.youtube.com/shorts/ZY2WNlKszMU"
+          },
+          "error": ""
+        },
+        "tiktok": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-25T14:08:51Z",
+          "result": {
+            "id": "v_inbox_file~v2.7712110742916335668",
+            "note": "SEND_TO_USER_INBOX",
+            "manual": "Mở app TikTok, bấm thông báo trong hộp thư để hoàn tất bài, dán caption bên dưới, chọn nhạc đang trend rồi Đăng.\nCaption:\nZYRA 3 TOP 1 MÃN NHÃN DOUBLEUP\n\nTheo dõi Hội Ngộ:\nYouTube: https://www.youtube.com/@HộiNgộKhông\nTikTok: https://www.tiktok.com/@hoi.ngo.khong\nInstagram: https://www.instagram.com/hoi.ngo.khong/\n\n#tft #dautruongchanly #doubleup #game #gaming"
+          },
+          "error": ""
+        },
+        "instagram": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-25T14:08:51Z",
+          "result": {
+            "id": "18141636103725297",
+            "url": "https://www.instagram.com/reel/DgKtl_8RfUo/"
           },
           "error": ""
         }
