@@ -33,6 +33,7 @@ DEFAULTS: dict = {
         "enabled": True,
         "model": "auto",
         "trending_slots": 2,
+        "youtube_extra_tags": 5,
         "write_caption": False,
         "extra_instructions": "",
     },
@@ -64,7 +65,7 @@ DEFAULTS: dict = {
         "cover_ms": 1000,
     },
     "instagram": {"api_version": "", "share_to_feed": True},
-    "limits": {"hashtags_youtube": 3, "hashtags_tiktok": 5, "hashtags_instagram": 5},
+    "limits": {"hashtags_youtube": 15, "hashtags_tiktok": 5, "hashtags_instagram": 5},
     "checks": {"min_seconds": 5, "warn_over_seconds": 90, "max_seconds": 180, "max_mb": 95},
 }
 

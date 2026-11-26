@@ -5,3 +5,5 @@ __pycache__/
 .venv/
 client_secret*.json
 secrets.local.txt
+/*.mp4
+CLAUDE.md

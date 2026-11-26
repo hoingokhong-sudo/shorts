@@ -70,7 +70,7 @@ class Hashtags(unittest.TestCase):
             m = captions.build(cfg, "clip.mp4", self.sidecar(user), tr, "key")
         self.assertEqual(len(m["tags"]["instagram"]), 5)
         self.assertEqual(len(m["tags"]["tiktok"]), 5)
-        self.assertEqual(len(m["tags"]["youtube"]), 3)
+        self.assertEqual(len(m["tags"]["youtube"]), 10)  # 7 tag của mày + 3 trending
         self.assertEqual(m["tags"]["instagram"][:3], ["#a1", "#b1", "#c1"])  # tag của mày giữ trước
         self.assertEqual(m["tags"]["instagram"][3:], ["#trendx", "#trendy"])  # 2 slot trending
         self.assertIn("#Shorts", m["text"]["youtube"]["description"])

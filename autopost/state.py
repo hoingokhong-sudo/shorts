@@ -6,7 +6,7 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-EMPTY = {"version": 1, "clips": {}, "posts": [], "history": [], "credit_until": None}
+EMPTY = {"version": 1, "clips": {}, "posts": [], "history": [], "posted": [], "credit_until": None}
 
 
 def load(path: Path) -> dict:

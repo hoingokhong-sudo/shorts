@@ -4,6 +4,7 @@ from __future__ import annotations
 import os
 import shutil
 import sys
+import unicodedata
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote
@@ -90,6 +91,12 @@ def pending_names(st: dict) -> list[str]:
     return [n for _, _, n in sorted(items)]
 
 
+def clip_key(name: str) -> str:
+    """Nhận diện clip theo tiêu đề (bỏ tag, số thứ tự) để đổi tag/đổi số vẫn biết là đã đăng."""
+    stem = unicodedata.normalize("NFC", name.rsplit(".", 1)[0])
+    return (clips.parse_name(stem)["title"] or stem).casefold()
+
+
 def run(cfg: dict, root: Path, *, now: datetime | None = None, force: bool = False, dry_run: bool = False, use_ai: bool = True, env=None, platforms: dict | None = None) -> dict:
     env = env if env is not None else os.environ
     now = now or datetime.now(timezone.utc)
@@ -107,6 +114,19 @@ def run(cfg: dict, root: Path, *, now: datetime | None = None, force: bool = Fal
 
     # 1. quét clip
     names = clips.scan(clips_dir)
+    # RULE: không đăng lại clip đã lên. Ngoại lệ (bài đã bị xoá): file .txt cùng tên có dòng `repost: yes`
+    done = set(st["posted"]) | {clip_key(h["clip"]) for h in st["history"] if h.get("ok")}
+    st["posted"] = sorted(done)
+    for n in list(names):
+        if st["clips"].get(n, {}).get("started") or clip_key(n) not in done:
+            continue
+        if clips.parse_sidecar(clips_dir / f"{n.rsplit('.', 1)[0]}.txt")["repost"]:
+            continue
+        names.remove(n)
+        skipped.append(f"{n}: đã đăng rồi, không đăng lại (chuyển vào failed/)")
+        log(skipped[-1])
+        if not dry_run:
+            _retire(root, cfg, n, ok=False)
     new = [n for n in names if n not in st["clips"]]
     for n in new:
         st["clips"][n] = {"added": S.iso(now), "platforms": {}, "started": False}
@@ -179,6 +199,8 @@ def run(cfg: dict, root: Path, *, now: datetime | None = None, force: bool = Fal
             if not clip.get("finished") and all(s in ("done", "failed") for s in states):
                 clip["finished"] = True
                 ok = "done" in states
+                if ok and clip_key(name) not in st["posted"]:
+                    st["posted"].append(clip_key(name))
                 st["history"].append({"clip": name, "at": S.iso(now), "ok": ok, "results": {p: _ent(clip, p) for p in clip["targets"]}})
                 _retire(root, cfg, name, ok)
                 events.append({"clip": name, "platform": "_final", "ok": ok})
@@ -217,8 +239,9 @@ def _make_meta(cfg, clips_dir: Path, name: str, platforms: dict, env, use_ai: bo
             except Exception:  # noqa: BLE001
                 tok = None
         tr = trending.collect(cfg, tok, env.get("YT_API_KEY"))
+        tr["related"] = trending.related_tags(cfg, side["tags"], tok, env.get("YT_API_KEY"))
     meta = captions.build(cfg, name, side, tr, key, use_ai=use_ai)
-    meta["trending_used"] = {"hashtags": tr["hashtags"][:10], "keywords": tr["keywords"][:6]}
+    meta["trending_used"] = {"hashtags": tr["hashtags"][:10], "related": tr.get("related", [])[:10], "keywords": tr["keywords"][:6]}
     return meta
 
 

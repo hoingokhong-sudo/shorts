@@ -12,6 +12,7 @@ import sys
 
 from . import clips as C
 from . import net
+from .trending import GENERIC
 
 GEMINI = "https://generativelanguage.googleapis.com/v1beta"
 SKIP_MODEL = ("image", "tts", "audio", "live", "embedding", "robotics", "computer", "imagen", "veo", "gemma", "thinking", "learnlm")
@@ -119,6 +120,9 @@ def build(cfg: dict, name: str, sidecar: dict, trending: dict, gemini_key: str |
     user = dedupe(sidecar["tags"])
     stem = name.rsplit(".", 1)[0]
     title = sidecar["title"] or C.prettify(stem)
+    related = dedupe(trending.get("related", []))
+    if related:  # có dữ liệu tag liên quan thì chỉ chọn trong đó
+        trending = {**trending, "hashtags": related}
     ai = None
     if use_ai and cfg["ai"]["enabled"] and gemini_key:
         ai = _gemini(
@@ -153,19 +157,26 @@ def build(cfg: dict, name: str, sidecar: dict, trending: dict, gemini_key: str |
         extra_tags = [t for t in trending.get("hashtags", []) if any(w in t.lower() for w in words)]
         source = "rule"
 
+    if related:  # AI chỉ được xếp thứ tự trong tag có thật, không được bịa
+        real = {t.lower() for t in related}
+        extra_tags = [t for t in dedupe(extra_tags) if t.lower() in real] + related
+    own = {u.lower() for u in user}
+    pool = [t for t in dedupe(extra_tags + always) if t.lower() not in own]
+
     def merge(limit: int) -> list[str]:
-        slots = min(cfg["ai"]["trending_slots"], limit)
-        pool_extra = [t for t in dedupe(extra_tags + always) if t.lower() not in {u.lower() for u in user}]
-        # chừa chỗ cho tag trending, nhưng luôn giữ ít nhất 3 tag của chủ clip (YouTube chỉ có 3 chỗ)
-        keep_user = user[: max(limit - min(slots, len(pool_extra)), min(3, limit))]
-        out = keep_user + pool_extra
-        out = dedupe(out)[:limit]
-        if len(out) < limit:  # còn chỗ thì bù tag của mày
-            out = dedupe(out + user)[:limit]
-        return out
+        """TikTok/Instagram (ít chỗ): tag đúng nội dung của mày + tag trending, tag chung chung (#Shorts, #xuhuong) xếp cuối."""
+        specific = [u for u in user if u.lstrip("#").lower() not in GENERIC]
+        slots = min(cfg["ai"]["trending_slots"], limit, len(pool))
+        keep = specific[: max(limit - slots, min(3, limit))]
+        return dedupe(keep + pool + specific + user)[:limit]
+
+    def merge_youtube(limit: int) -> list[str]:
+        """YouTube (nhiều chỗ): giữ tag của mày rồi thêm `youtube_extra_tags` tag mới."""
+        extra = pool[: cfg["ai"]["youtube_extra_tags"]]
+        return dedupe(user[: limit - len(extra)] + extra)
 
     L = cfg["limits"]
-    tags = {"youtube": merge(L["hashtags_youtube"]), "tiktok": merge(L["hashtags_tiktok"]), "instagram": merge(L["hashtags_instagram"])}
+    tags = {"youtube": merge_youtube(L["hashtags_youtube"]), "tiktok": merge(L["hashtags_tiktok"]), "instagram": merge(L["hashtags_instagram"])}
     yt_tags = list(tags["youtube"])
     if cfg["youtube"]["add_shorts_tag"] and "#shorts" not in {t.lower() for t in yt_tags}:
         yt_tags.append("#Shorts")

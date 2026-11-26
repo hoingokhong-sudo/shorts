@@ -44,7 +44,7 @@ def parse_sidecar(path: Path) -> dict:
         #tag1 #tag2 ...
         mô tả/ghi chú tuỳ chọn (AI dùng làm ngữ cảnh)
     """
-    out = {"title": "", "tags": [], "note": ""}
+    out = {"title": "", "tags": [], "note": "", "repost": False}
     if not path.exists():
         return out
     note = []
@@ -52,6 +52,9 @@ def parse_sidecar(path: Path) -> dict:
         m = re.match(r"^\s*(title|tiêu đề|tieu de)\s*:\s*(.+)$", line, re.I)
         if m:
             out["title"] = m.group(2).strip()
+            continue
+        if re.match(r"^\s*repost\s*:\s*(yes|true|1)\s*$", line, re.I):
+            out["repost"] = True
             continue
         tags = HASHTAG.findall(line)
         if tags:
