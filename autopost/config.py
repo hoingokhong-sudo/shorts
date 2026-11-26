@@ -51,6 +51,7 @@ DEFAULTS: dict = {
         "made_for_kids": False,
         "ai_generated": False,
         "add_shorts_tag": True,
+        "title_tags": 3,
     },
     "tiktok": {
         # draft  = đẩy vào hộp thư TikTok, mày mở app bấm Đăng (không cần tài khoản riêng tư)

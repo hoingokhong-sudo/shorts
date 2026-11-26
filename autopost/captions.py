@@ -181,11 +181,23 @@ def build(cfg: dict, name: str, sidecar: dict, trending: dict, gemini_key: str |
     if cfg["youtube"]["add_shorts_tag"] and "#shorts" not in {t.lower() for t in yt_tags}:
         yt_tags.append("#Shorts")
     text = {
-        "youtube": {"title": _clip(title, 95), "description": "\n\n".join(x for x in (caption, footer(cfg, "youtube"), " ".join(yt_tags)) if x).strip()},
+        "youtube": {"title": title_with_tags(title, tags["youtube"], pool, cfg["youtube"]["title_tags"]), "description": "\n\n".join(x for x in (caption, footer(cfg, "youtube"), " ".join(yt_tags)) if x).strip()},
         "tiktok": _clip_total(caption, tags["tiktok"], 2200, extra=footer(cfg, "tiktok")),
         "instagram": _clip_total(caption, tags["instagram"], 2200, sep="\n\n", extra=footer(cfg, "instagram")),
     }
     return {"title": title, "caption": caption, "tags": tags, "text": text, "source": source}
+
+
+def title_with_tags(title: str, tags: list[str], trending_pool: list[str], count: int) -> str:
+    """Gắn vài hashtag vào cuối tiêu đề YouTube: 1 tag đúng nội dung của mày + tag đang hot. Tối đa 100 ký tự."""
+    out = _clip(title, 95)
+    specific = [t for t in tags if t.lstrip("#").lower() not in GENERIC]
+    hot = {t.lower() for t in trending_pool}
+    order = dedupe(specific[:1] + [t for t in specific if t.lower() in hot] + specific)
+    for t in order[: max(count, 0)]:
+        if len(out) + len(t) + 1 <= 100:
+            out += " " + t
+    return out
 
 
 def footer(cfg: dict, platform: str) -> str:

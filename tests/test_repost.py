@@ -21,6 +21,11 @@ class RepostAndTags(unittest.TestCase):
         for p in ("tiktok", "instagram"):
             self.assertEqual(m["tags"][p], ["#GhostofTsushima", "#Gaming", "#livestream", "#samurai", "#ghost"])
 
+    def test_title_tags(self):
+        t = captions.title_with_tags("Tiêu đề", ["#Ghost", "#Gaming", "#Shorts", "#samurai", "#jin"], ["#samurai", "#jin"], 3)
+        self.assertEqual(t, "Tiêu đề #Ghost #samurai #jin")
+        self.assertLessEqual(len(captions.title_with_tags("a " * 60, ["#" + "x" * 30], [], 3)), 100)
+
     def test_broad_tags_not_searched(self):
         with mock.patch.object(trending.net, "request") as req:
             req.return_value.status_code = 403

@@ -68,6 +68,7 @@ youtube:
   made_for_kids: false
   ai_generated: false                # true nếu clip có hình/giọng do AI tạo (YouTube yêu cầu khai báo)
   add_shorts_tag: true
+  title_tags: 3                      # số hashtag gắn vào cuối tiêu đề (0 = tắt)
 
 tiktok:
   # draft  = clip vào hộp thư TikTok, mày mở app bấm Đăng (chọn được nhạc trend, không cần để tài khoản riêng tư)
