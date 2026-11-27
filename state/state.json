@@ -1,11 +1,6 @@
 {
   "version": 1,
   "clips": {
-    "Người anh em thân thương ngày ấy... #GhostofTsushima #Gaming #Xuhuong #Shorts #livestream.mp4": {
-      "added": "2026-11-26T14:04:27Z",
-      "platforms": {},
-      "started": false
-    },
     "Samurai nhưng mà lạ lắm #GhostofTsushima #Gaming #Xuhuong #Shorts #livestream.mp4": {
       "added": "2026-11-26T14:04:27Z",
       "platforms": {},
@@ -18,7 +13,8 @@
     "2026-11-23T13:34:37Z",
     "2026-11-24T13:52:25Z",
     "2026-11-25T14:08:51Z",
-    "2026-11-26T14:04:27Z"
+    "2026-11-26T14:04:27Z",
+    "2026-11-27T13:52:49Z"
   ],
   "history": [
     {
@@ -248,6 +244,44 @@
           "error": ""
         }
       }
+    },
+    {
+      "clip": "Người anh em thân thương ngày ấy... #GhostofTsushima #Gaming #Xuhuong #Shorts #livestream.mp4",
+      "at": "2026-11-27T13:52:49Z",
+      "ok": true,
+      "results": {
+        "youtube": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-27T13:52:49Z",
+          "result": {
+            "id": "I3ZCf_hD03o",
+            "url": "https://www.youtube.com/shorts/I3ZCf_hD03o"
+          },
+          "error": ""
+        },
+        "tiktok": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-27T13:52:49Z",
+          "result": {
+            "id": "v_inbox_file~v2.7712848531840714753",
+            "note": "SEND_TO_USER_INBOX",
+            "manual": "Mở app TikTok, bấm thông báo trong hộp thư để hoàn tất bài, dán caption bên dưới, chọn nhạc đang trend rồi Đăng.\nCaption:\nNgười anh em thân thương ngày ấy\n\nTheo dõi Hội Ngộ:\nYouTube: https://www.youtube.com/@HộiNgộKhông\nTikTok: https://www.tiktok.com/@hoi.ngo.khong\nInstagram: https://www.instagram.com/hoi.ngo.khong/\n\n#GhostofTsushima #Gaming #livestream #jinsakai #samurai"
+          },
+          "error": ""
+        },
+        "instagram": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-27T13:52:49Z",
+          "result": {
+            "id": "18438274042150460",
+            "url": "https://www.instagram.com/reel/DgP1Vd8pKWL/"
+          },
+          "error": ""
+        }
+      }
     }
   ],
   "credit_until": null,
@@ -257,6 +291,7 @@
     "khi bạn còng lưng def máu đầu game còn thằng cốt cứ tiên hắc ám đâu t.t",
     "mày đấm tao đau vậy bro",
     "warwick tích số cực căng rồi gánh board thằng bạn còng cả lưng",
-    "zyra 3 top 1 mãn nhãn doubleup"
+    "zyra 3 top 1 mãn nhãn doubleup",
+    "người anh em thân thương ngày ấy"
   ]
 }
