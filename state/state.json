@@ -1,12 +1,6 @@
 {
   "version": 1,
-  "clips": {
-    "Samurai nhưng mà lạ lắm #GhostofTsushima #Gaming #Xuhuong #Shorts #livestream.mp4": {
-      "added": "2026-11-26T14:04:27Z",
-      "platforms": {},
-      "started": false
-    }
-  },
+  "clips": {},
   "posts": [
     "2026-11-21T21:27:49Z",
     "2026-11-22T02:30:16Z",
@@ -14,7 +8,8 @@
     "2026-11-24T13:52:25Z",
     "2026-11-25T14:08:51Z",
     "2026-11-26T14:04:27Z",
-    "2026-11-27T13:52:49Z"
+    "2026-11-27T13:52:49Z",
+    "2026-11-28T05:13:53Z"
   ],
   "history": [
     {
@@ -282,6 +277,44 @@
           "error": ""
         }
       }
+    },
+    {
+      "clip": "Samurai nhưng mà lạ lắm #GhostofTsushima #Gaming #Xuhuong #Shorts #livestream.mp4",
+      "at": "2026-11-28T05:13:53Z",
+      "ok": true,
+      "results": {
+        "youtube": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-28T05:13:53Z",
+          "result": {
+            "id": "UNsH26H2IBI",
+            "url": "https://www.youtube.com/shorts/UNsH26H2IBI"
+          },
+          "error": ""
+        },
+        "tiktok": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-28T05:13:53Z",
+          "result": {
+            "id": "v_inbox_file~v2.7713085656310728711",
+            "note": "SEND_TO_USER_INBOX",
+            "manual": "Mở app TikTok, bấm thông báo trong hộp thư để hoàn tất bài, dán caption bên dưới, chọn nhạc đang trend rồi Đăng.\nCaption:\nSamurai nhưng mà lạ lắm\n\nTheo dõi Hội Ngộ:\nYouTube: https://www.youtube.com/@HộiNgộKhông\nTikTok: https://www.tiktok.com/@hoi.ngo.khong\nInstagram: https://www.instagram.com/hoi.ngo.khong/\n\n#GhostofTsushima #Gaming #livestream #jinsakai #samurai"
+          },
+          "error": ""
+        },
+        "instagram": {
+          "status": "done",
+          "attempts": 1,
+          "last": "2026-11-28T05:13:53Z",
+          "result": {
+            "id": "18170837452513135",
+            "url": "https://www.instagram.com/reel/DgRevYnhQ2Y/"
+          },
+          "error": ""
+        }
+      }
     }
   ],
   "credit_until": null,
@@ -292,6 +325,7 @@
     "mày đấm tao đau vậy bro",
     "người anh em thân thương ngày ấy",
     "warwick tích số cực căng rồi gánh board thằng bạn còng cả lưng",
-    "zyra 3 top 1 mãn nhãn doubleup"
+    "zyra 3 top 1 mãn nhãn doubleup",
+    "samurai nhưng mà lạ lắm"
   ]
 }
